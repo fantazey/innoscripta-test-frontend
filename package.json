@@ -1,0 +1,37 @@
+{
+  "name": "pizzashop-ui",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "cross-env": "^5.1.4",
+    "react-scripts": "3.4.1"
+  },
+  "dependencies": {
+    "connected-react-router": "^6.8.0",
+    "history": "^4.10.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "cross-env PORT=3100 react-scripts start"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

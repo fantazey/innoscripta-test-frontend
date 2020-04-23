@@ -12,7 +12,6 @@ export const promiseMiddleware = store => next => action => {
       },
       error => {
         action.error = true;
-        debugger;
         action.payload = error;
         store.dispatch({type: END_ASYNC});
         store.dispatch(action);

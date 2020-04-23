@@ -9,7 +9,7 @@ export default class CartButton extends React.Component {
                activeClassName='active'
                to={"/cart"}>
         <span>Cart</span>
-        <span className={"pl-2"}>0</span>
+        <span className={"pl-2"}>{this.props.cartPrice}</span>
       </NavLink>
     </div>;
   }

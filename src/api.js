@@ -3,10 +3,17 @@ const API_ROOT = 'http://localhost:8000/api';
 const apiURL = url => `${API_ROOT}${url}`;
 
 const requests = {
-  get: url => fetch(apiURL(url)).then(res => res.json()),
+  get: url => fetch(apiURL(url), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(res => res.json()),
   post: (url, data) => fetch(apiURL(url), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
-    body: data
+    body: JSON.stringify(data)
   }).then(res => res.json())
 };
 
@@ -17,9 +24,10 @@ const menu = {
 
 const cart = {
   loadCart: id => requests.get(`/orders/${id}`),
-  addToCart: (order, product) => requests.post('/addToCart', {order, product}),
-  removeFromCart: (order, product) => requests.post('/removeFromCart', {order, product}),
-  confirmOrder: data => requests.post('/confirmOrder', data)
+  addToCart: data => requests.post('/addToCart', data),
+  removeFromCart: data => requests.post('/removeFromCart', data),
+  confirmOrder: data => requests.post('/confirmOrder', data),
+  checkOrder: () => requests.get('/orderCheck')
 };
 
 export default {

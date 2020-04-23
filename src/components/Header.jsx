@@ -8,7 +8,8 @@ import CartButton from "./Header/CartButton";
 
 const mapStateToProps = state => ({
   categoriesLoaded: state.menu.categoriesLoaded,
-  categories: state.menu.categoriesByName
+  categories: state.menu.categoriesByName,
+  cartPrice: state.order.cartPrice,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -16,12 +17,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Header extends React.Component {
-
-  constructor(props) {
-    super(...arguments);
-    if (!props.categoriesLoaded) {
+  componentDidMount() {
+    const {categoriesLoaded, onLoad} = this.props;
+    if (!categoriesLoaded) {
       const promise = api.menu.loadCategories();
-      props.onLoad(promise);
+      onLoad(promise);
     }
   }
 
@@ -33,14 +33,17 @@ class Header extends React.Component {
     return <div>
       <div className={"d-flex flex-row justify-content-between align-items-center bg-light"}>
         <div className={"d-flex"}>
-          <img src="/logo.png" alt="" style={{width:'6em',height:'6em'}}/>
+          <NavLink exact
+            to="/">
+            <img src="/logo.png" alt="" style={{width:'6em',height:'6em'}}/>
+          </NavLink>
         </div>
         <div className={"d-flex text-uppercase text-center align-self-center"}
              style={{'fontSize': '3em'}}>
           Test Pizza Shop
         </div>
         <div className={"d-flex"}>
-          <CartButton />
+          <CartButton cartPrice={this.props.cartPrice}/>
         </div>
       </div>
       <Navigation categories={categories} />

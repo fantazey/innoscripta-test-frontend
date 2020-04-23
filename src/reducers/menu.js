@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
           productsByCategory[category] = [];
         }
         if (!categoryIsEmpty.hasOwnProperty(category)) {
-          categoryIsEmpty[category] = true;
+          categoryIsEmpty[category] = false;
         }
       });
       return {
@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
           categoryIsEmpty
         };
       }
-
+      productsByCategory[category] = [];
       products.forEach(product => {
         let existed = productsByCategory[category].find(x => x.id === product.id);
         if (existed) {
@@ -65,7 +65,6 @@ export default (state = initialState, action) => {
           productsByCategory[category].push(product);
         }
       });
-      categoryIsEmpty[category] = false;
       return {
         ...state,
         productsByCategory,

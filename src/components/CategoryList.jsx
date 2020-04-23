@@ -1,35 +1,57 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import api from './../api';
-import {CATEGORY_PRODUCTS_LOAD} from "../actionTypes";
+import { v4 } from 'uuid';
+import {CATEGORY_PRODUCTS_LOAD, ORDER_ADD_PRODUCT} from "../actionTypes";
 import ProductCell from "./Menu/ProductCell";
 
 const mapStateToProps = (state, props) => {
   const category = props.match.params.category;
   const menu = state.menu;
+  const order = state.order.order;
+  let products = [];
+  if (menu.productsByCategory.hasOwnProperty(category)) {
+    products = menu.productsByCategory[category];
+  }
   return {
     category,
-    products: menu.productsByCategory[category],
+    order,
+    products: products,
     productsEmpty: menu.categoryIsEmpty[category]
   }
 };
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload, category) => dispatch({type: CATEGORY_PRODUCTS_LOAD, payload, category})
+  onLoad: (payload, category) => dispatch({type: CATEGORY_PRODUCTS_LOAD, payload, category}),
+  addToCart: (payload) => dispatch({type: ORDER_ADD_PRODUCT, payload})
 });
 
 class CategoryList extends React.Component {
 
-  constructor(props) {
-    super(...arguments);
-    if (!props.products && !props.productsEmpty) {
-      const promise = api.menu.loadProducts(props.category);
-      props.onLoad(promise, props.category);
+  componentDidMount() {
+    const {products, category, productsEmpty, onLoad} = this.props;
+
+    if (!productsEmpty && products.length === 0) {
+      const promise = api.menu.loadProducts(category);
+      onLoad(promise, category);
     }
   }
 
   get name() {
     return this.props.category;
+  }
+
+  addToCart(product) {
+    const data = {
+      product: product.id
+    };
+    if (this.props.order.uid) {
+      data.uid = this.props.order.uid;
+    } else {
+      data.uid = v4();
+    }
+    const promise = api.cart.addToCart(data);
+    this.props.addToCart(promise);
   }
 
   render() {
@@ -45,6 +67,7 @@ class CategoryList extends React.Component {
             image={"https://images.all-free-download.com/images/graphiclarge/pizza_hd_picture_5_167275.jpg"}
             name={product.name}
             description={product.description}
+            add={() => this.addToCart(product)}
             price={product.price}/>
         )}
       </div>

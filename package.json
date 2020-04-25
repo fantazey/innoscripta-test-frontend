@@ -23,7 +23,8 @@
     "uuid": "^7.0.3"
   },
   "scripts": {
-    "start": "cross-env PORT=3100 react-scripts start"
+    "start": "cross-env PORT=3100 react-scripts start",
+    "build": "react-scripts build"
   },
   "browserslist": {
     "production": [

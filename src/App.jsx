@@ -8,6 +8,7 @@ import Order from "./components/Order";
 import Cart from "./components/Cart";
 import {ORDER_CHECK} from "./actionTypes";
 import {connect} from "react-redux";
+import Confirm from "./components/Confirm";
 
 const mapDispatchToProps = dispatch => ({
   checkOrder: payload => dispatch({type: ORDER_CHECK, payload})
@@ -31,10 +32,11 @@ class App extends React.Component {
           <Route exact path="/" component={Index}/>
           <Route path="/menu/:category" component={CategoryList}/>
           <Route path="/cart" component={Cart} />
+          <Route path="/confirm" component={Confirm} />
           <Route path="/order" component={Order} />
         </Switch>
         <footer style={{position: "fixed", bottom: "10px"}}>
-          <a href="https://www.freepik.com/free-photos-vectors/logo">Logo vector created by freepik - www.freepik.com</a>
+          {/*<a href="https://www.freepik.com/free-photos-vectors/logo">Logo vector created by freepik - www.freepik.com</a>*/}
         </footer>
       </div>;
   }

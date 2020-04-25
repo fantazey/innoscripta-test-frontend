@@ -1,7 +1,10 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
+import {toCurrency} from "../../utils";
 
-const ProductCell = (props) =>
-  <div className={"d-flex flex-column m-2"} style={{"width": '10em'}}>
+const ProductCell = (props) => {
+  const {t} = useTranslation();
+  return <div className={"d-flex flex-column m-2"} style={{"width": '10em'}}>
     <div className={"d-flex"}>
       <img src={props.image} height="150" width="150" alt={props.name}/>
     </div>
@@ -13,13 +16,13 @@ const ProductCell = (props) =>
       </span>
       </div>
       <div className={"d-flex btn btn-info align-self-stretch justify-content-start"} onClick={props.add}>
-        Add to cart
+        {t('add-to-cart')}
         <span className={"px-2 align-right"}>
-          {props.price}
+          {toCurrency(props.price)}
         </span>
       </div>
     </div>
-  </div>
-;
+  </div>;
+};
 
 export default ProductCell;

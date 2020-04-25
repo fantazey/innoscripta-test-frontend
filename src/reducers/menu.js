@@ -5,12 +5,13 @@ const initialState = {
   categoriesByName: [],
   categoriesLoaded: false,
   productsByCategory: {},
+  productsByCategoryCount: {},
   categoryIsEmpty: {},
   error: null
 };
 
 export default (state = initialState, action) => {
-  let productsByCategory, categoryIsEmpty;
+  let productsByCategory, categoryIsEmpty, productsByCategoryCount;
   switch (action.type) {
     case CATEGORIES_LOADED:
       let categories = action.payload.types;
@@ -23,12 +24,16 @@ export default (state = initialState, action) => {
       const categoriesByName = categories.map( x => x.name );
       productsByCategory = {...state.productsByCategory};
       categoryIsEmpty = {...state.categoryIsEmpty};
+      productsByCategoryCount = {...state.productsByCategoryCount};
       categoriesByName.forEach(category => {
         if (!productsByCategory.hasOwnProperty(category)) {
           productsByCategory[category] = [];
         }
         if (!categoryIsEmpty.hasOwnProperty(category)) {
           categoryIsEmpty[category] = false;
+        }
+        if (!productsByCategoryCount.hasOwnProperty(category)) {
+          productsByCategoryCount[category] = 0;
         }
       });
       return {
@@ -41,13 +46,15 @@ export default (state = initialState, action) => {
       };
     case CATEGORY_PRODUCTS_LOAD:
       const category = action.category;
-      const products = action.payload.products;
+      const {products, meta} = action.payload;
       productsByCategory = {...state.productsByCategory};
+      productsByCategoryCount = {...state.productsByCategoryCount};
       if (!productsByCategory[category]) {
         return {
           ...state
         };
       }
+      productsByCategoryCount[category] = meta.total;
       categoryIsEmpty = {...state.categoryIsEmpty};
       if (products.length === 0 && productsByCategory[category].length === 0) {
         categoryIsEmpty[category] = true;

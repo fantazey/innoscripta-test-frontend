@@ -1,12 +1,17 @@
 import React from 'react';
+import {compose} from 'redux';
 import {connect} from 'react-redux'
+import {withTranslation} from 'react-i18next';
+import {NavLink} from 'react-router-dom'
 import CartRow from "./Cart/CartRow";
+import TotalCartRow from "./Cart/TotalCartRow";
 
 const mapStateToProps = state => ({
-  order: state.order.order
+  order: state.order.order,
+  cartPrice: state.order.cartPrice,
 });
 
-class CartRowItem {
+export class CartRowItem {
   constructor(product) {
     this.count = 1;
     this.product = product;
@@ -49,7 +54,7 @@ class Cart extends React.Component {
 
   render() {
     if (!this.order.products || this.order.products.length === 0) {
-      return <div>empty cart</div>
+      return <div>{this.props.t('empty-cart')}</div>
     }
     return <div>
       {Object.keys(this.items).map((key,index) =>
@@ -57,8 +62,19 @@ class Cart extends React.Component {
                  row={this.items[key]}
                  index={index}/>
       )}
+      <TotalCartRow cartPrice={this.props.cartPrice} />
+      <div className={"row d-flex flex-row align-items-center justify-content-center"}>
+        <div className={"btn btn-warning"}>
+          <NavLink to={"/confirm"}>
+          {this.props.t("cart-confirm")}
+          </NavLink>
+        </div>
+      </div>
     </div>
   }
 }
 
-export default connect(mapStateToProps, null)(Cart)
+export default compose(
+  withTranslation(),
+  connect(mapStateToProps, null)
+)(Cart)

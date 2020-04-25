@@ -1,5 +1,7 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import {withTranslation} from 'react-i18next'
 import api from './../api';
 import { v4 } from 'uuid';
 import {CATEGORY_PRODUCTS_LOAD, ORDER_ADD_PRODUCT} from "../actionTypes";
@@ -28,9 +30,18 @@ const mapDispatchToProps = dispatch => ({
 
 class CategoryList extends React.Component {
 
-  componentDidMount() {
-    const {products, category, productsEmpty, onLoad} = this.props;
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.category !== this.props.category) {
+      this.loadProducts();
+    }
+  }
 
+  componentDidMount() {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    const {products, category, productsEmpty, onLoad} = this.props;
     if (!productsEmpty && products.length === 0) {
       const promise = api.menu.loadProducts(category);
       onLoad(promise, category);
@@ -55,11 +66,14 @@ class CategoryList extends React.Component {
   }
 
   render() {
-    if (!this.props.products) {
-      return <div>There is no products yet in this category</div>;
+    if (this.props.products.length === 0) {
+      return <div className={"d-flex flex-column justify-content-center align-items-center mt-5"}>
+        <h1>{this.props.t(this.name)}</h1>
+        <div>{this.props.t('empty-category')}</div>
+      </div>;
     }
-    return <div className={"d-flex flex-column justify-content-center align-items-center"}>
-      <h1>{this.name}</h1>
+    return <div className={"d-flex flex-column justify-content-center align-items-center mt-5"}>
+      <h1>{this.props.t(this.name)}</h1>
       <div className={"d-flex flex-row"}>
         {this.props.products.map((product, index) =>
           <ProductCell
@@ -75,4 +89,7 @@ class CategoryList extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+export default compose(
+  withTranslation(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(CategoryList);

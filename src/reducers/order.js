@@ -1,6 +1,6 @@
 import {
   ORDER_ADD_PRODUCT,
-  ORDER_CHECK,
+  ORDER_CHECK, ORDER_CHECK_ADDRESS, ORDER_CONFIRM,
   ORDER_REMOVE_PRODUCT
 } from "../actionTypes";
 
@@ -9,6 +9,8 @@ const initialState = {
     uid: '7700c7df-8f16-45f3-85ad-b6d9adb70ff3'
   },
   cartPrice: 0,
+  deliveryCost: 0,
+  deliveryAddressCorrect: false,
   error: null
 };
 
@@ -37,9 +39,25 @@ export default (state=initialState, action) => {
         order,
         cartPrice: calcCartPrice(order)
       };
-    default:
+    case ORDER_CHECK_ADDRESS:
+      const payload = action.payload;
+      if (payload.hasOwnProperty('deliveryCost')) {
+        return {
+          ...state,
+          deliveryCost: payload.deliveryCost.toFixed(2),
+          deliveryAddressCorrect: true
+        }
+      }
       return {
-        ...state
+        ...state,
+        deliveryCost: 0,
+        deliveryAddressCorrect: false
       };
+    case ORDER_CONFIRM:
+      return {
+        ...state,
+      };
+    default:
+      return {...state};
   }
 }

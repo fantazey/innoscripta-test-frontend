@@ -1,6 +1,8 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import {withTranslation} from 'react-i18next'
 import api from '../api';
 import { CATEGORIES_LOADED } from "../actionTypes";
 import Navigation from "./Header/Navigation";
@@ -25,11 +27,15 @@ class Header extends React.Component {
     }
   }
 
+  getMenuButtons() {
+    return this.props.categories.map(x => ({path: `/menu/${x}`, label: this.props.t(x)}));
+  }
+
   render() {
     if (!this.props.categoriesLoaded) {
       return <div>LOADING</div>;
     }
-    const categories = this.props.categories.map(x => ({path: `/menu/${x}`, label: x}));
+    const categories = this.getMenuButtons();
     return <div>
       <div className={"d-flex flex-row justify-content-between align-items-center bg-light"}>
         <div className={"d-flex"}>
@@ -40,7 +46,7 @@ class Header extends React.Component {
         </div>
         <div className={"d-flex text-uppercase text-center align-self-center"}
              style={{'fontSize': '3em'}}>
-          Test Pizza Shop
+          {this.props.t('header-text')}
         </div>
         <div className={"d-flex"}>
           <CartButton cartPrice={this.props.cartPrice}/>
@@ -51,4 +57,7 @@ class Header extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default compose(
+  withTranslation(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(Header);

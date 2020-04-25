@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import store, { history } from './store';
+import './i18n';
 import App from './App';
 
 render(

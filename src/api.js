@@ -27,7 +27,8 @@ const cart = {
   addToCart: data => requests.post('/addToCart', data),
   removeFromCart: data => requests.post('/removeFromCart', data),
   confirmOrder: data => requests.post('/confirmOrder', data),
-  checkOrder: () => requests.get('/orderCheck')
+  checkOrder: () => requests.get('/orderCheck'),
+  checkAddress: address => requests.post('/addressCheck', {address})
 };
 
 export default {

@@ -1,7 +1,9 @@
 import React from "react";
+import {compose} from 'redux';
+import {connect} from "react-redux";
+import {withTranslation} from 'react-i18next';
 import {toCurrency} from "../../utils";
 import {ORDER_ADD_PRODUCT, ORDER_REMOVE_PRODUCT} from "../../actionTypes";
-import {connect} from "react-redux";
 import api from "../../api";
 
 const mapDispatchToProps = dispatch => ({
@@ -53,11 +55,14 @@ class CartRow extends React.Component {
           <i className="fas fa-minus-circle" />
         </span>
       </div>
-      <div className={"col-2 py-2"}>
-        {toCurrency(this.row.totalPrice)}
+      <div className={"col-3 py-2 text-right"}>
+        <span className={"pr-2"}>{this.props.t('cart-row-total')}</span>{toCurrency(this.row.totalPrice)}
       </div>
     </div>
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartRow);
+export default compose(
+  withTranslation(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(CartRow);

@@ -54,7 +54,11 @@ class Cart extends React.Component {
 
   render() {
     if (!this.order.products || this.order.products.length === 0) {
-      return <div>{this.props.t('empty-cart')}</div>
+      return <div className={"row d-flex flex-row align-items-center justify-content-center mt-3"}>
+        <h4>
+          {this.props.t('empty-cart')}
+        </h4>
+      </div>
     }
     return <div>
       {Object.keys(this.items).map((key,index) =>

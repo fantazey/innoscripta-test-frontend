@@ -1,6 +1,7 @@
 import React from "react";
 import {compose} from "redux";
 import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
 import {Redirect} from 'react-router-dom'
 import OrderRow from "./Cart/OrderRow";
@@ -12,7 +13,8 @@ const mapStateToProps = state => ({
   order: state.order.order,
   cartPrice: state.order.cartPrice,
   deliveryCost: state.order.deliveryCost,
-  deliveryAddressCorrect: state.order.deliveryAddressCorrect
+  deliveryAddressCorrect: state.order.deliveryAddressCorrect,
+  orderConfirmed: state.order.orderConfirmed
 });
 
 class Confirm extends React.Component {
@@ -32,6 +34,13 @@ class Confirm extends React.Component {
     return +this.props.cartPrice + (+this.props.deliveryCost);
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!prevProps.orderConfirmed && this.props.orderConfirmed) {
+      // todo: flash some notice that everything is ok. wait and redirect to index
+      this.props.history.push("/");
+    }
+  }
+
   render() {
     if (!this.props.order) {
       return <Redirect to={"/"}/>
@@ -41,9 +50,9 @@ class Confirm extends React.Component {
     }
     const t = this.props.t;
     return <div className={"row d-flex flex-column justify-content-center align-items-center"}>
-      <h1 className={"my-2"}>
+      <h4 className={"my-3"}>
         {t('confirm-order-title')}
-      </h1>
+      </h4>
       <div className={"row col"}>
         <div className={"col-6"}>
           <OrderForm/>
@@ -72,6 +81,7 @@ class Confirm extends React.Component {
 }
 
 export default compose(
+  withRouter,
   withTranslation(),
   connect(mapStateToProps,null)
 )(Confirm);

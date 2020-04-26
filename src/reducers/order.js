@@ -9,7 +9,8 @@ const initialState = {
   cartPrice: 0,
   deliveryCost: 0,
   deliveryAddressCorrect: false,
-  error: null
+  error: null,
+  orderConfirmed: false,
 };
 
 function calcCartPrice(order) {
@@ -54,8 +55,22 @@ export default (state=initialState, action) => {
         deliveryAddressCorrect: false
       };
     case ORDER_CONFIRM:
+      if (!action.payload.hasOwnProperty('order')) {
+        // handle error on confirm order
+        return {
+          ...state
+        };
+      }
+      order = action.payload.order;
+      let orderConfirmed = false;
+      if (order.status === 'confirmed') {
+        orderConfirmed = true;
+      }
       return {
         ...state,
+        order,
+        orderConfirmed,
+        cartPrice: 0 // reset cart price
       };
     default:
       return {...state};

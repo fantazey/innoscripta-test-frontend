@@ -118,7 +118,7 @@ class OrderForm extends React.Component {
 
     return <form className={""}>
       <div className={"form-group col-8"}>
-        <label>Full name</label>
+        <label>{t('order-form-full-name')}</label>
         <input type="text"
                className={`form-control ${validation.name ? '': 'is-invalid'}`}
                name={"name"}
@@ -127,7 +127,7 @@ class OrderForm extends React.Component {
                required={true}/>
       </div>
       <div className={"form-group col-8"}>
-        <label>Phone</label>
+        <label>{t('order-form-phone')}</label>
         <input type="text"
                className={`form-control ${validation.phone ? '' : 'is-invalid'}`}
                name={"phone"}
@@ -136,7 +136,7 @@ class OrderForm extends React.Component {
                required={true}/>
       </div>
       <div className={"form-group col-8"}>
-        <label>Delivery address</label>
+        <label>{t('order-form-delivery-address')}</label>
         <input type="text"
                className={"form-control"}
                name={"address"}
@@ -145,7 +145,7 @@ class OrderForm extends React.Component {
                required={true}/>
       </div>
       <div className={"form-group col-8"}>
-        <label>Payment method</label>
+        <label>{t('order-form-payment-method')}</label>
         {Object.keys(paymentMethods).map(key => {
           return <div className="custom-control custom-radio" key={`payment-method-control-${key}`}>
             <input
@@ -166,7 +166,7 @@ class OrderForm extends React.Component {
         <div
           onClick={this.submitForm}
           className={`btn btn-${canSubmitForm ? 'success':'secondary disabled'}`}>
-          {t("form-submit")}
+          {t("order-form-submit")}
         </div>
       </div>
     </form>

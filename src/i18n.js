@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import {initReactI18next} from 'react-i18next';
+import React from "react";
 
 const resources = {
   en: {
@@ -14,7 +15,20 @@ const resources = {
       'add-to-cart': 'Add',
       'header-text': 'Test pizza shop',
       'empty-category': 'There is no items yet',
-      'cart-row-total': 'Sum:'
+      'cart-row-total': 'Sum:',
+      'empty-cart': 'Cart is empty. Pleas add some pizza or anything else to proceed',
+      'cart-total': 'Total:',
+      'cart-confirm': 'Confirm order',
+      'delivery-price': 'Delivery cost:',
+      'confirm-form-enter-correct-address': 'Address required for calc delivery cost',
+      'payment-method-cash': 'Cash',
+      'payment-method-card_on_line': 'Credit card',
+      'order-form-full-name': 'Full name',
+      'order-form-phone': 'Contact phone',
+      'order-form-delivery-address': 'Delivery address',
+      'order-form-payment-method': 'Payment method',
+      'confirm-order-title': 'Confirm order',
+      'order-form-submit': 'Confirm order'
     }
   }
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {toCurrency} from "../../utils";
+import CurrencyPrice from "../CurrencyPrice";
 
 const ProductCell = (props) => {
   const {t} = useTranslation();
@@ -19,7 +19,7 @@ const ProductCell = (props) => {
            onClick={props.add}>
         {t('add-to-cart')}
         <span className="px-2 align-right">
-          {toCurrency(props.price)}
+          <CurrencyPrice price={props.price} />
         </span>
       </div>
     </div>

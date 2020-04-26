@@ -8,6 +8,7 @@ import { CATEGORIES_LOADED } from "../actionTypes";
 import Navigation from "./Header/Navigation";
 import CartButton from "./Header/CartButton";
 import Loader from "./Loader";
+import CurrencyToggler from "./Header/CurrencyToggler";
 
 const mapStateToProps = state => ({
   categoriesLoaded: state.menu.categoriesLoaded,
@@ -50,6 +51,7 @@ class Header extends React.Component {
              style={{'fontSize': '3em'}}>
           {t('header-text')}
         </div>
+        <CurrencyToggler/>
         <div className="d-flex">
           <CartButton cartPrice={cartPrice}/>
         </div>

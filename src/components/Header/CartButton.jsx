@@ -1,7 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {useTranslation} from 'react-i18next'
-import {toCurrency} from "../../utils";
+import CurrencyPrice from "../CurrencyPrice";
 
 const CartButton =  props => {
   const {t} = useTranslation();
@@ -10,9 +10,9 @@ const CartButton =  props => {
                className='nav-link'
                activeClassName='active'
                to="/cart">
-        <span>{t('cart')}</span>
+    <span>{t('cart')}</span>
         <span className="pl-2">
-          {toCurrency(props.cartPrice)}
+            <CurrencyPrice price={props.cartPrice} />
         </span>
       </NavLink>
   </div>;

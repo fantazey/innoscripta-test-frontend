@@ -2,16 +2,16 @@ import config from './config';
 
 const apiURL = url => `${config.apiRoot}${url}`;
 
+const headers = {
+  'Content-Type': 'application/json',
+};
+
 const requests = {
   get: url => fetch(apiURL(url), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   }).then(res => res.json()),
   post: (url, data) => fetch(apiURL(url), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     method: 'POST',
     body: JSON.stringify(data)
   }).then(res => res.json())
@@ -31,7 +31,14 @@ const cart = {
   checkAddress: address => requests.post('/addressCheck', {address})
 };
 
+const common = {
+  loadCurrency: () => fetch(
+      'https://api.exchangeratesapi.io/latest?base=USD&symbols=EUR,USD'
+  ).then(res => res.json())
+};
+
 export default {
   menu,
-  cart
+  cart,
+  common
 };

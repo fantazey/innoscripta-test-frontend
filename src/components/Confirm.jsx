@@ -5,9 +5,9 @@ import {withRouter, Redirect} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
 import OrderRow from "./Cart/OrderRow";
 import {CartRowItem} from "./Cart";
-import {toCurrency} from "../utils";
 import OrderForm from "./Cart/OrderForm";
 import Loader from "./Loader";
+import CurrencyPrice from "./CurrencyPrice";
 
 const mapStateToProps = state => ({
   order: state.order.order,
@@ -56,10 +56,10 @@ class Confirm extends React.Component {
         {t('confirm-order-title')}
       </h4>
       <div className="row col">
-        <div className="col-6">
+        <div className="col-5">
           <OrderForm/>
         </div>
-        <div className="col-6">
+        <div className="col-7">
           {Object.keys(this.items).map((key,index) =>
             <OrderRow key={`order_row_${index}`}
                       row={this.items[key]}
@@ -68,12 +68,12 @@ class Confirm extends React.Component {
           <div className="row flex-row justify-content-start my-2 col">
             <div className="col py-2 text-right">
               <span className="pr-2">{t('delivery-price')}</span>
-              {deliveryAddressCorrect ? toCurrency(deliveryCost) : t('confirm-form-enter-correct-address')}
+              {deliveryAddressCorrect ? <CurrencyPrice price={deliveryCost} /> : t('confirm-form-enter-correct-address')}
             </div>
           </div>
           <div className="row flex-row justify-content-start my-2 col">
             <div className="col py-2 text-right">
-              <span className="pr-2">{t('cart-total')}</span>{toCurrency(this.totalPrice)}
+              <span className="pr-2">{t('cart-total')}</span><CurrencyPrice price={this.totalPrice} />
             </div>
           </div>
         </div>

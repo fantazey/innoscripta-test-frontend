@@ -2,9 +2,9 @@ import React from "react";
 import {compose} from 'redux';
 import {connect} from "react-redux";
 import {withTranslation} from 'react-i18next';
-import {toCurrency} from "../../utils";
 import {ORDER_ADD_PRODUCT, ORDER_REMOVE_PRODUCT} from "../../actionTypes";
 import api from "../../api";
+import CurrencyPrice from "../CurrencyPrice";
 
 const mapDispatchToProps = dispatch => ({
   addProduct: payload => dispatch({type:ORDER_ADD_PRODUCT, payload}),
@@ -66,7 +66,7 @@ class CartRow extends React.Component {
         <span className="pr-2">
           {t('cart-row-total')}
         </span>
-        {toCurrency(row.totalPrice)}
+        <CurrencyPrice price={row.totalPrice} />
       </div>
     </div>
   }

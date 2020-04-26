@@ -5,5 +5,7 @@ export const ORDER_ADD_PRODUCT = 'order/add_product';
 export const ORDER_REMOVE_PRODUCT = 'order/remove_product';
 export const ORDER_CHECK_ADDRESS = 'order/check_address';
 export const ORDER_CONFIRM = 'order/confirm';
+export const COMMON_EXCHANGE_RATE_LOADED = 'common/exchange_rate_loaded';
+export const COMMON_TOGGLE_CURRENCY = 'common/toggle_currency';
 export const BEGIN_ASYNC = 'begin_async';
 export const END_ASYNC = 'end_async';

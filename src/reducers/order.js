@@ -45,7 +45,7 @@ export default (state=initialState, action) => {
       if (payload.hasOwnProperty('deliveryCost')) {
         return {
           ...state,
-          deliveryCost: payload.deliveryCost.toFixed(2),
+          deliveryCost: +payload.deliveryCost.toFixed(2),
           deliveryAddressCorrect: true
         }
       }

@@ -1,6 +1,6 @@
-const API_ROOT = 'http://localhost:8000/api';
+import config from './config';
 
-const apiURL = url => `${API_ROOT}${url}`;
+const apiURL = url => `${config.apiRoot}${url}`;
 
 const requests = {
   get: url => fetch(apiURL(url), {

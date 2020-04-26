@@ -53,28 +53,29 @@ class Cart extends React.Component {
   }
 
   render() {
+    const {t, cartPrice} = this.props;
     if (!this.order.products || this.order.products.length === 0) {
-      return <div className={"row d-flex flex-row align-items-center justify-content-center mt-3"}>
+      return <div className="row d-flex flex-row align-items-center justify-content-center mt-3">
         <h4>
-          {this.props.t('empty-cart')}
+          {t('empty-cart')}
         </h4>
       </div>
     }
-    return <div>
+    return <React.Fragment>
       {Object.keys(this.items).map((key,index) =>
         <CartRow key={`cart_row_${index}`}
                  row={this.items[key]}
                  index={index}/>
       )}
       <TotalCartRow cartPrice={this.props.cartPrice} />
-      <div className={"row d-flex flex-row align-items-center justify-content-center"}>
-        <div className={"btn btn-warning"}>
-          <NavLink to={"/confirm"}>
-          {this.props.t("cart-confirm")}
+      <div className="row d-flex flex-row align-items-center justify-content-center">
+        <div className="btn btn-warning">
+          <NavLink to="/confirm">
+          {t("cart-confirm")}
           </NavLink>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   }
 }
 

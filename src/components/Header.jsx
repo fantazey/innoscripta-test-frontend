@@ -7,6 +7,7 @@ import api from '../api';
 import { CATEGORIES_LOADED } from "../actionTypes";
 import Navigation from "./Header/Navigation";
 import CartButton from "./Header/CartButton";
+import Loader from "./Loader";
 
 const mapStateToProps = state => ({
   categoriesLoaded: state.menu.categoriesLoaded,
@@ -32,28 +33,29 @@ class Header extends React.Component {
   }
 
   render() {
-    if (!this.props.categoriesLoaded) {
-      return <div>LOADING</div>;
+    const {categoriesLoaded, cartPrice, t} = this.props;
+    if (!categoriesLoaded) {
+      return <Loader/>;
     }
     const categories = this.getMenuButtons();
-    return <div>
-      <div className={"d-flex flex-row justify-content-between align-items-center bg-light"}>
-        <div className={"d-flex"}>
+    return <React.Fragment>
+      <div className="d-flex flex-row justify-content-between align-items-center bg-light">
+        <div className="d-flex">
           <NavLink exact
             to="/">
             <img src="/logo.png" alt="" style={{width:'6em',height:'6em'}}/>
           </NavLink>
         </div>
-        <div className={"d-flex text-uppercase text-center align-self-center"}
+        <div className="d-flex text-uppercase text-center align-self-center"
              style={{'fontSize': '3em'}}>
-          {this.props.t('header-text')}
+          {t('header-text')}
         </div>
-        <div className={"d-flex"}>
-          <CartButton cartPrice={this.props.cartPrice}/>
+        <div className="d-flex">
+          <CartButton cartPrice={cartPrice}/>
         </div>
       </div>
       <Navigation categories={categories} />
-    </div>;
+    </React.Fragment>;
   }
 }
 

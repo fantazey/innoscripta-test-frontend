@@ -3,17 +3,19 @@ import {NavLink} from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 import {toCurrency} from "../../utils";
 
-export default props => {
+const CartButton =  props => {
   const {t} = useTranslation();
-  return <div className={"mr-1 bg-warning"} style={{'borderRadius': '0.4em'}}>
+  return <div className="mr-1 bg-warning" style={{'borderRadius': '0.4em'}}>
       <NavLink exact
                className='nav-link'
                activeClassName='active'
-               to={"/cart"}>
+               to="/cart">
         <span>{t('cart')}</span>
-        <span className={"pl-2"}>
+        <span className="pl-2">
           {toCurrency(props.cartPrice)}
         </span>
       </NavLink>
   </div>;
 };
+
+export default CartButton;

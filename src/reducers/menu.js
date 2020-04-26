@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
   let productsByCategory, categoryIsEmpty, productsByCategoryCount;
   switch (action.type) {
     case CATEGORIES_LOADED:
-      let categories = action.payload.types;
+      const categories = action.payload.types;
       if (!categories) {
         return {
           ...state,
@@ -49,12 +49,12 @@ export default (state = initialState, action) => {
       const {products, meta} = action.payload;
       productsByCategory = {...state.productsByCategory};
       productsByCategoryCount = {...state.productsByCategoryCount};
-      if (!productsByCategory[category]) {
+      if (!productsByCategory[category] || !products) {
         return {
           ...state
         };
       }
-      productsByCategoryCount[category] = meta.total;
+      productsByCategoryCount[category] = meta && meta.total ? meta.total : 0;
       categoryIsEmpty = {...state.categoryIsEmpty};
       if (products.length === 0 && productsByCategory[category].length === 0) {
         categoryIsEmpty[category] = true;
@@ -65,7 +65,7 @@ export default (state = initialState, action) => {
       }
       productsByCategory[category] = [];
       products.forEach(product => {
-        let existed = productsByCategory[category].find(x => x.id === product.id);
+        const existed = productsByCategory[category].find(x => x.id === product.id);
         if (existed) {
           Object.assign(existed, product);
         } else {

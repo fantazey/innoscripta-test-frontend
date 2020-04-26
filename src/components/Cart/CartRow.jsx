@@ -16,47 +16,57 @@ const mapStateToProps = state => ({
 });
 
 class CartRow extends React.Component {
-  get row() {
-    return this.props.row;
+  constructor(props) {
+    super(props);
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
-  add(product) {
+  add() {
+    const {row, uid, addProduct} = this.props;
     const data = {
-      product: this.row.product.id,
-      uid: this.props.uid
+      product: row.product.id,
+      uid
     };
     const promise = api.cart.addToCart(data);
-    this.props.addProduct(promise);
+    addProduct(promise);
   }
 
-  remove(product) {
+  remove() {
+    const {row, uid, removeProduct} = this.props;
     const data = {
-      product: this.row.product.id,
-      uid: this.props.uid
+      product: row.product.id,
+      uid
     };
     const promise = api.cart.removeFromCart(data);
-    this.props.removeProduct(promise);
+    removeProduct(promise);
   }
 
   render() {
-    return <div className={"row flex-row justify-content-start my-2 col-7"}>
-      <div className={"col"}>
-        <div className={"py-2"}>
-          {this.row.name}
+    const {row, t} = this.props;
+    return <div className="row flex-row justify-content-start my-2 col-7">
+      <div className="col">
+        <div className="py-2">
+          {row.name}
         </div>
       </div>
-      <div className={"col-3 d-flex flex-row align-items-stretch"}>
-        <span className={"btn btn-success mx-2"} onClick={() => this.add()}>
+      <div className="col-3 d-flex flex-row align-items-stretch">
+        <span className="btn btn-success mx-2" onClick={this.add}>
           <i className="fas fa-plus-circle" />
         </span>
-        <div className={"btn btn-info disabled"}
-             style={{"fontWeight": "bolder"}}>{this.row.count}</div>
-        <span className={"btn btn-success mx-2"} onClick={() => this.remove()}>
+        <div className="btn btn-info disabled"
+             style={{"fontWeight": "bolder"}}>
+          {row.count}
+        </div>
+        <span className="btn btn-success mx-2" onClick={this.remove}>
           <i className="fas fa-minus-circle" />
         </span>
       </div>
-      <div className={"col-3 py-2 text-right"}>
-        <span className={"pr-2"}>{this.props.t('cart-row-total')}</span>{toCurrency(this.row.totalPrice)}
+      <div className="col-3 py-2 text-right">
+        <span className="pr-2">
+          {t('cart-row-total')}
+        </span>
+        {toCurrency(row.totalPrice)}
       </div>
     </div>
   }

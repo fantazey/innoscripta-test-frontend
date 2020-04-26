@@ -14,7 +14,8 @@ const initialState = {
 };
 
 function calcCartPrice(order) {
-  return order.products.reduce((acc, product) => acc + product.price, 0);
+  const result = order.products.reduce((acc, product) => acc + product.price, 0);
+  return +result.toFixed(2);
 }
 
 export default (state=initialState, action) => {

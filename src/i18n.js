@@ -28,7 +28,8 @@ const resources = {
       'order-form-delivery-address': 'Delivery address',
       'order-form-payment-method': 'Payment method',
       'confirm-order-title': 'Confirm order',
-      'order-form-submit': 'Confirm order'
+      'order-form-submit': 'Confirm order',
+      'loading': 'Loading data'
     }
   }
 };

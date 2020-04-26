@@ -26,7 +26,7 @@ class App extends React.Component {
   }
 
   render() {
-    return  <div className={"container"}>
+    return  <div className="container">
         <Header />
         <Switch>
           <Route exact path="/" component={Index}/>
@@ -35,9 +35,6 @@ class App extends React.Component {
           <Route path="/confirm" component={Confirm} />
           <Route path="/order" component={Order} />
         </Switch>
-        <footer style={{position: "fixed", bottom: "10px"}}>
-          {/*<a href="https://www.freepik.com/free-photos-vectors/logo">Logo vector created by freepik - www.freepik.com</a>*/}
-        </footer>
       </div>;
   }
 }

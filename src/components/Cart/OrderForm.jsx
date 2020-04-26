@@ -65,21 +65,19 @@ class OrderForm extends React.Component {
   validateFields() {
     const phoneValidation = new RegExp(/^\d{5,}$/);
     const fields = this.state.fields;
-    const validation = {...this.state.validation};
+    const validation = {};
     let valid = true;
+
+    Object.keys(fields).map(key => validation[key] = true);
 
     if (fields.name.trim().length === 0) {
       validation['name'] = false;
       valid = false;
-    } else {
-      validation['name'] = true;
     }
 
     if (!phoneValidation.test(fields.phone)) {
       validation['phone'] = false;
       valid = false;
-    } else {
-      validation['phone'] = true;
     }
 
     return {validation, valid};
@@ -91,7 +89,8 @@ class OrderForm extends React.Component {
   }
 
   submitForm() {
-    if (!this.props.addressCorrect) {
+    const {addressCorrect, confirm, order} = this.props;
+    if (!addressCorrect) {
       return;
     }
     const {valid, validation} = this.validateFields();
@@ -105,46 +104,45 @@ class OrderForm extends React.Component {
       clientPhone: fields.phone,
       deliveryAddress: fields.address,
       paymentMethod: fields.paymentMethod,
-      uid: this.props.order.uid
+      uid: order.uid
     };
     const promise = api.cart.confirmOrder(data);
-    this.props.confirm(promise);
+    confirm(promise);
   }
 
   render() {
-    const {t} = this.props;
+    const {t, addressCorrect: canSubmitForm} = this.props;
     const {fields, paymentMethods, validation} = this.state;
-    const canSubmitForm = this.props.addressCorrect;
 
-    return <form className={""}>
-      <div className={"form-group col-8"}>
+    return <form>
+      <div className="form-group col-8">
         <label>{t('order-form-full-name')}</label>
         <input type="text"
                className={`form-control ${validation.name ? '': 'is-invalid'}`}
-               name={"name"}
+               name="name"
                onChange={event => this.changeField('name', event)}
                value={fields.name}
                required={true}/>
       </div>
-      <div className={"form-group col-8"}>
+      <div className="form-group col-8">
         <label>{t('order-form-phone')}</label>
         <input type="text"
                className={`form-control ${validation.phone ? '' : 'is-invalid'}`}
-               name={"phone"}
+               name="phone"
                onChange={event => this.changeField('phone', event)}
                value={fields.phone}
                required={true}/>
       </div>
-      <div className={"form-group col-8"}>
+      <div className="form-group col-8">
         <label>{t('order-form-delivery-address')}</label>
         <input type="text"
-               className={"form-control"}
-               name={"address"}
+               className="form-control"
+               name="address"
                onChange={event => this.changeField('address', event)}
                value={fields.address}
                required={true}/>
       </div>
-      <div className={"form-group col-8"}>
+      <div className="form-group col-8">
         <label>{t('order-form-payment-method')}</label>
         {Object.keys(paymentMethods).map(key => {
           return <div className="custom-control custom-radio" key={`payment-method-control-${key}`}>
@@ -162,7 +160,7 @@ class OrderForm extends React.Component {
           </div>
         })}
       </div>
-      <div className={"form-group col-8"}>
+      <div className="form-group col-8">
         <div
           onClick={this.submitForm}
           className={`btn btn-${canSubmitForm ? 'success':'secondary disabled'}`}>

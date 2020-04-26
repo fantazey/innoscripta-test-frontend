@@ -66,16 +66,17 @@ class CategoryList extends React.Component {
   }
 
   render() {
-    if (this.props.products.length === 0) {
-      return <div className={"d-flex flex-column justify-content-center align-items-center mt-5"}>
-        <h1>{this.props.t(this.name)}</h1>
-        <div>{this.props.t('empty-category')}</div>
+    const {products, t} = this.props;
+    if (products.length === 0) {
+      return <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+        <h1>{t(this.name)}</h1>
+        <div>{t('empty-category')}</div>
       </div>;
     }
-    return <div className={"d-flex flex-column justify-content-center align-items-center mt-5"}>
-      <h1>{this.props.t(this.name)}</h1>
-      <div className={"d-flex flex-row"}>
-        {this.props.products.map((product, index) =>
+    return <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+      <h1>{t(this.name)}</h1>
+      <div className="d-flex flex-row row">
+        {products.map((product, index) =>
           <ProductCell
             key={`product_cell_${index}`}
             image={"https://images.all-free-download.com/images/graphiclarge/pizza_hd_picture_5_167275.jpg"}

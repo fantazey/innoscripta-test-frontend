@@ -5,9 +5,7 @@ import {
 } from "../actionTypes";
 
 const initialState = {
-  order: {
-    uid: '7700c7df-8f16-45f3-85ad-b6d9adb70ff3'
-  },
+  order: {},
   cartPrice: 0,
   deliveryCost: 0,
   deliveryAddressCorrect: false,
@@ -23,13 +21,15 @@ export default (state=initialState, action) => {
   switch (action.type) {
     case ORDER_CHECK:
       order = {};
+      let cartPrice = 0;
       if (action.payload.hasOwnProperty('order') && action.payload.order) {
         order = action.payload.order;
+        cartPrice = calcCartPrice(order);
       }
       return {
         ...state,
         order,
-        cartPrice: calcCartPrice(order)
+        cartPrice
       };
     case ORDER_ADD_PRODUCT:
     case ORDER_REMOVE_PRODUCT:

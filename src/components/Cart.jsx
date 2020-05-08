@@ -1,15 +1,35 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux'
-import {withTranslation} from 'react-i18next';
-import {NavLink} from 'react-router-dom'
-import CartRow from "./Cart/CartRow";
-import TotalCartRow from "./Cart/TotalCartRow";
+import TotalCartRow from "./Cart/CartTotalRow";
+import CartEmpty from "./Cart/CartEmpty";
+import CartItemList from "./Cart/CartItemList";
+import CartConfirmButton from "./Cart/CartConfirmButton";
 
-const mapStateToProps = state => ({
-  order: state.order.order,
-  cartPrice: state.order.cartPrice,
-});
+export function transformOrderProducts(products) {
+  const items = {};
+  products.forEach(product => {
+    if (!items.hasOwnProperty(product.id)) {
+      items[product.id] = new CartRowItem(product);
+    } else {
+      items[product.id].addProduct();
+    }
+  });
+  return items;
+}
+
+const mapStateToProps = state => {
+  const { order, cartPrice } = state.order;
+  if (!order.products || order.products.length === 0) {
+    return {
+      isEmpty: true
+    }
+  }
+  const items = transformOrderProducts(order.products);
+  return {
+    items,
+    cartPrice
+  };
+};
 
 export class CartRowItem {
   constructor(product) {
@@ -34,52 +54,16 @@ export class CartRowItem {
   }
 }
 
-class Cart extends React.Component {
-
-  get order() {
-    return this.props.order;
+const Cart = props => {
+  const {items, isEmpty, cartPrice} = props;
+  if (isEmpty) {
+    return <CartEmpty />;
   }
+  return <React.Fragment>
+    <CartItemList items={items}/>
+    <TotalCartRow cartPrice={cartPrice}/>
+    <CartConfirmButton/>
+  </React.Fragment>
+};
 
-  get items() {
-    const items = {};
-    this.order.products.forEach(product => {
-      if (!items.hasOwnProperty(product.id)) {
-        items[product.id] = new CartRowItem(product);
-      } else {
-        items[product.id].addProduct();
-      }
-    });
-    return items;
-  }
-
-  render() {
-    const {t, cartPrice} = this.props;
-    if (!this.order.products || this.order.products.length === 0) {
-      return <div className="row d-flex flex-row align-items-center justify-content-center mt-3">
-        <h4>
-          {t('empty-cart')}
-        </h4>
-      </div>
-    }
-    return <React.Fragment>
-      {Object.keys(this.items).map((key,index) =>
-        <CartRow key={`cart_row_${index}`}
-                 row={this.items[key]}
-                 index={index}/>
-      )}
-      <TotalCartRow cartPrice={this.props.cartPrice} />
-      <div className="row d-flex flex-row align-items-center justify-content-center">
-        <div className="btn btn-warning">
-          <NavLink to="/confirm">
-          {t("cart-confirm")}
-          </NavLink>
-        </div>
-      </div>
-    </React.Fragment>
-  }
-}
-
-export default compose(
-  withTranslation(),
-  connect(mapStateToProps, null)
-)(Cart)
+export default connect(mapStateToProps, null)(Cart)

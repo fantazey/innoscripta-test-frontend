@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
   confirm: payload => dispatch({type:ORDER_CONFIRM, payload})
 });
 
-class OrderForm extends React.Component {
+class ConfirmForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -174,4 +174,4 @@ class OrderForm extends React.Component {
 export default compose(
   withTranslation(),
   connect(mapStateToProps, mapDispatchToProps)
-)(OrderForm)
+)(ConfirmForm)

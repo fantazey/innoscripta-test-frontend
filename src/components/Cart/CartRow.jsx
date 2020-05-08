@@ -2,9 +2,11 @@ import React from "react";
 import {compose} from 'redux';
 import {connect} from "react-redux";
 import {withTranslation} from 'react-i18next';
+import PropTypes from 'prop-types';
 import {ORDER_ADD_PRODUCT, ORDER_REMOVE_PRODUCT} from "../../actionTypes";
 import api from "../../api";
 import CurrencyPrice from "../CurrencyPrice";
+import CartRowButton from "./CartRow/CartRowButton";
 
 const mapDispatchToProps = dispatch => ({
   addProduct: payload => dispatch({type:ORDER_ADD_PRODUCT, payload}),
@@ -51,16 +53,12 @@ class CartRow extends React.Component {
         </div>
       </div>
       <div className="col-3 d-flex flex-row align-items-stretch">
-        <span className="btn btn-success mx-2" onClick={this.add}>
-          <i className="fas fa-plus-circle" />
-        </span>
+        <CartRowButton add={this.add} extraClass="fa-plus-circle" />
         <div className="btn btn-info disabled"
              style={{"fontWeight": "bolder"}}>
           {row.count}
         </div>
-        <span className="btn btn-success mx-2" onClick={this.remove}>
-          <i className="fas fa-minus-circle" />
-        </span>
+        <CartRowButton add={this.remove} extraClass="fa-minus-circle" />
       </div>
       <div className="col-3 py-2 text-right">
         <span className="pr-2">
@@ -71,6 +69,16 @@ class CartRow extends React.Component {
     </div>
   }
 }
+
+CartRow.propTypes = {
+  row: PropTypes.shape({
+    product: PropTypes.object,
+    count: PropTypes.number,
+    price: PropTypes.number,
+    totalPrice: PropTypes.number,
+    name: PropTypes.string
+  }).isRequired
+};
 
 export default compose(
   withTranslation(),

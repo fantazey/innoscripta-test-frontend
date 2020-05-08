@@ -2,6 +2,7 @@ import React from 'react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import Loader from "./Loader";
 
 const mapStateToProps = state => ({
   categories: state.menu.categories,
@@ -24,7 +25,7 @@ class IndexDummyPage extends React.Component {
   }
 
   render() {
-    return <div>Temp dummy page</div>;
+    return <Loader />;
   }
 }
 

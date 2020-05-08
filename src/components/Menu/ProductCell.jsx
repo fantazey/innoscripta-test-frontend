@@ -1,29 +1,31 @@
-import React from "react";
-import {useTranslation} from "react-i18next";
-import CurrencyPrice from "../CurrencyPrice";
+import React from 'react';
+import PropTypes from 'prop-types'
+import Image from './ProductCell/Image';
+import AddButton from "./ProductCell/AddButton";
 
-const ProductCell = (props) => {
-  const {t} = useTranslation();
+const ProductCell = ({item, add}) => {
   return <div className="d-flex flex-column m-2" style={{"width": '10em'}}>
-    <div className="d-flex">
-      <img src={props.image} height="150" width="150" alt={props.name}/>
-    </div>
+    <Image {...item} />
     <div className="d-flex flex-column justify-content-between"
          style={{"height": "6em"}}>
       <div className="d-flex flex-row justify-content-between">
-      <span title={props.description}>
-        {props.name}
-      </span>
-      </div>
-      <div className="d-flex btn btn-info align-self-stretch justify-content-start"
-           onClick={props.add}>
-        {t('add-to-cart')}
-        <span className="px-2 align-right">
-          <CurrencyPrice price={props.price} />
+        <span title={item.description}>
+          {item.name}
         </span>
       </div>
+      <AddButton price={item.price} add={add} />
     </div>
   </div>;
+};
+
+ProductCell.propTypes = {
+  add: PropTypes.func.isRequired,
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired
+  })
 };
 
 export default ProductCell;

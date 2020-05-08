@@ -3,9 +3,9 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter, Redirect} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
-import OrderRow from "./Cart/OrderRow";
-import {CartRowItem} from "./Cart";
-import OrderForm from "./Cart/OrderForm";
+import ConfirmRow from "./Confirm/ConfirmRow";
+import OrderForm from "./Confirm/ConfirmForm";
+import {CartRowItem, transformOrderProducts} from "./Cart";
 import Loader from "./Loader";
 import CurrencyPrice from "./CurrencyPrice";
 
@@ -19,15 +19,7 @@ const mapStateToProps = state => ({
 
 class Confirm extends React.Component {
   get items() {
-    const items = {};
-    this.props.order.products.forEach(product => {
-      if (!items.hasOwnProperty(product.id)) {
-        items[product.id] = new CartRowItem(product);
-      } else {
-        items[product.id].addProduct();
-      }
-    });
-    return items;
+    return transformOrderProducts(this.props.order.products);
   }
 
   get totalPrice() {
@@ -61,9 +53,9 @@ class Confirm extends React.Component {
         </div>
         <div className="col-7">
           {Object.keys(this.items).map((key,index) =>
-            <OrderRow key={`order_row_${index}`}
-                      row={this.items[key]}
-                      index={index}/>
+            <ConfirmRow key={`order_row_${index}`}
+                        row={this.items[key]}
+                        index={index}/>
           )}
           <div className="row flex-row justify-content-start my-2 col">
             <div className="col py-2 text-right">

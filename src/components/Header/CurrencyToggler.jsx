@@ -24,17 +24,17 @@ class CurrencyToggler extends React.Component {
         }
     }
 
-    selectCurrency(key) {
-        this.props.toggleCurrency(key);
-    }
-
     render() {
-        const {currencyList, currentCurrency} = this.props;
+        const {
+            currencyList,
+            currentCurrency,
+            toggleCurrency
+        } = this.props;
         return <div className="d-flex col-1">
-            {this.props.currencyList.map((currency, index) => {
+            {currencyList.map((currency, index) => {
                 return <span className={`btn ${currency === currentCurrency ? 'btn-primary' : ''}`}
                              key={`currency_${index}`}
-                             onClick={() => this.selectCurrency(currency)}>
+                             onClick={() => toggleCurrency(currency)}>
                     {currencySymbolMap[currency]}
                 </span>
             })}

@@ -2,7 +2,7 @@ import React from "react";
 import {useTranslation} from 'react-i18next';
 import CurrencyPrice from "../CurrencyPrice";
 
-const OrderRow = props => {
+const ConfirmRow = props => {
   const {t} = useTranslation();
   const {row} = props;
   return <div className="row flex-row justify-content-start my-2 col">
@@ -26,4 +26,4 @@ const OrderRow = props => {
   </div>;
 };
 
-export default OrderRow;
+export default ConfirmRow;

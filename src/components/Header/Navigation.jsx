@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { NavLink } from "react-router-dom";
 
 const Navigation = props => <nav style={{'backgroundColor': 'aliceblue'}}>
@@ -16,5 +17,12 @@ const Navigation = props => <nav style={{'backgroundColor': 'aliceblue'}}>
     )}
   </ul>
 </nav>;
+
+Navigation.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    path: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
+  })).isRequired
+};
 
 export default Navigation;

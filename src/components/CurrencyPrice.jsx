@@ -1,18 +1,21 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 import {toCurrency} from "../utils";
 
-const mapStateToProps = state => ({
-    rate: state.common.currencyRates[state.common.currentCurrency],
-    currency: state.common.currentCurrency
-});
-
-class CurrencyPrice extends React.Component {
-    render() {
-        const { price, rate, currency } = this.props;
-        const currencyPrice = price * rate;
-        return toCurrency(currencyPrice.toFixed(2), currency)
+const CurrencyPrice = ({price}) => {
+    const {currency, rate} = useSelector(({common}) => ({
+        currency: common.currentCurrency,
+        rate: common.currencyRates[common.currentCurrency]
+    }));
+    if (Number.isFinite(rate)) {
+        return toCurrency((price * rate).toFixed(2), currency)
     }
-}
+    return null;
+};
 
-export default connect(mapStateToProps, null)(CurrencyPrice);
+CurrencyPrice.propTypes = {
+    price: PropTypes.number.isRequired
+};
+
+export default CurrencyPrice;

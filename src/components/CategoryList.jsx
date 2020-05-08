@@ -65,27 +65,31 @@ class CategoryList extends React.Component {
     this.props.addToCart(promise);
   }
 
-  render() {
-    const {products, t} = this.props;
+  emptyContent() {
+    const {t} = this.props;
+    return <div>{t('empty-category')}</div>;
+  }
+
+  getContent() {
+    const {products} = this.props;
     if (products.length === 0) {
-      return <div className="d-flex flex-column justify-content-center align-items-center mt-5">
-        <h1>{t(this.name)}</h1>
-        <div>{t('empty-category')}</div>
-      </div>;
+      return this.emptyContent();
     }
+    return <div className="d-flex flex-row row justify-content-around flex-wrap">
+      {products.map((product, index) =>
+        <ProductCell
+          key={`product_cell_${index}`}
+          item={product}
+          add={() => this.addToCart(product)}/>
+      )}
+    </div>
+  }
+
+  render() {
+    const {t} = this.props;
     return <div className="d-flex flex-column justify-content-center align-items-center mt-5">
       <h1>{t(this.name)}</h1>
-      <div className="d-flex flex-row row justify-content-around">
-        {products.map((product, index) =>
-          <ProductCell
-            key={`product_cell_${index}`}
-            image={product.image}
-            name={product.name}
-            description={product.description}
-            add={() => this.addToCart(product)}
-            price={product.price}/>
-        )}
-      </div>
+      {this.getContent()}
     </div>;
   }
 }

@@ -4,7 +4,6 @@ import api from './api';
 import Header from './components/Header';
 import Index from './components/Index';
 import CategoryList from "./components/CategoryList";
-import Order from "./components/Order";
 import Cart from "./components/Cart";
 import {ORDER_CHECK} from "./actionTypes";
 import {connect} from "react-redux";
@@ -33,7 +32,6 @@ class App extends React.Component {
           <Route path="/menu/:category" component={CategoryList}/>
           <Route path="/cart" component={Cart} />
           <Route path="/confirm" component={Confirm} />
-          <Route path="/order" component={Order} />
         </Switch>
       </div>;
   }

@@ -1,7 +1,7 @@
-import i18n from "i18next";
-import {initReactI18next} from 'react-i18next';
-import React from "react";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
+/* eslint-disable quote-props */
 const resources = {
   en: {
     translation: {
@@ -33,6 +33,7 @@ const resources = {
     }
   }
 };
+/* eslint-enable */
 
 i18n.use(initReactI18next).init({
   resources,

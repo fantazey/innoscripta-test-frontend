@@ -1,4 +1,7 @@
-import { CATEGORIES_LOADED, CATEGORY_PRODUCTS_LOAD } from './../actionTypes'
+import {
+  CATEGORIES_LOADED,
+  CATEGORY_PRODUCTS_LOAD
+} from '../actionTypes';
 
 const initialState = {
   categories: [],
@@ -11,29 +14,36 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  let productsByCategory, categoryIsEmpty, productsByCategoryCount;
+  let categories,
+    categoriesByName,
+    productsByCategory,
+    categoryIsEmpty,
+    category,
+    products,
+    meta,
+    productsByCategoryCount;
   switch (action.type) {
     case CATEGORIES_LOADED:
-      const categories = action.payload.types;
+      categories = action.payload.types;
       if (!categories) {
         return {
           ...state,
           error: 'Empty categories. Something gone wrong'
         };
       }
-      const categoriesByName = categories.map( x => x.name );
-      productsByCategory = {...state.productsByCategory};
-      categoryIsEmpty = {...state.categoryIsEmpty};
-      productsByCategoryCount = {...state.productsByCategoryCount};
-      categoriesByName.forEach(category => {
-        if (!productsByCategory.hasOwnProperty(category)) {
-          productsByCategory[category] = [];
+      categoriesByName = categories.map(x => x.name);
+      productsByCategory = { ...state.productsByCategory };
+      categoryIsEmpty = { ...state.categoryIsEmpty };
+      productsByCategoryCount = { ...state.productsByCategoryCount };
+      categoriesByName.forEach(item => {
+        if (!productsByCategory.hasOwnProperty(item)) {
+          productsByCategory[item] = [];
         }
-        if (!categoryIsEmpty.hasOwnProperty(category)) {
-          categoryIsEmpty[category] = false;
+        if (!categoryIsEmpty.hasOwnProperty(item)) {
+          categoryIsEmpty[item] = false;
         }
-        if (!productsByCategoryCount.hasOwnProperty(category)) {
-          productsByCategoryCount[category] = 0;
+        if (!productsByCategoryCount.hasOwnProperty(item)) {
+          productsByCategoryCount[item] = 0;
         }
       });
       return {
@@ -45,17 +55,18 @@ export default (state = initialState, action) => {
         categoriesLoaded: true
       };
     case CATEGORY_PRODUCTS_LOAD:
-      const category = action.category;
-      const {products, meta} = action.payload;
-      productsByCategory = {...state.productsByCategory};
-      productsByCategoryCount = {...state.productsByCategoryCount};
+      category = action.category;
+      products = action.payload.products;
+      meta = action.payload.meta;
+      productsByCategory = { ...state.productsByCategory };
+      productsByCategoryCount = { ...state.productsByCategoryCount };
       if (!productsByCategory[category] || !products) {
         return {
           ...state
         };
       }
       productsByCategoryCount[category] = meta && meta.total ? meta.total : 0;
-      categoryIsEmpty = {...state.categoryIsEmpty};
+      categoryIsEmpty = { ...state.categoryIsEmpty };
       if (products.length === 0 && productsByCategory[category].length === 0) {
         categoryIsEmpty[category] = true;
         return {
@@ -82,4 +93,4 @@ export default (state = initialState, action) => {
         ...state
       };
   }
-}
+};

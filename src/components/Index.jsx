@@ -1,8 +1,9 @@
 import React from 'react';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import Loader from "./Loader";
+import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import Loader from './Loader';
 
 const mapStateToProps = state => ({
   categories: state.menu.categories,
@@ -10,24 +11,34 @@ const mapStateToProps = state => ({
 });
 
 class IndexDummyPage extends React.Component {
-  _redirect() {
-    if (this.props.categoriesLoaded) {
-      this.props.history.push("/menu/" + this.props.categories[0].name);
-    }
-  }
-
   componentDidMount() {
-    this._redirect();
+    this.redirect();
   }
 
   componentDidUpdate() {
-    this._redirect();
+    this.redirect();
+  }
+
+  redirect() {
+    if (this.props.categoriesLoaded) {
+      this.props.history.push(`/menu/${this.props.categories[0].name}`);
+    }
   }
 
   render() {
     return <Loader />;
   }
 }
+
+IndexDummyPage.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string
+    })
+  ).isRequired,
+  categoriesLoaded: PropTypes.bool.isRequired,
+  history: PropTypes.shape().isRequired
+};
 
 export default compose(
   withRouter,

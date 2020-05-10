@@ -2,7 +2,7 @@ import {
   ORDER_ADD_PRODUCT,
   ORDER_CHECK, ORDER_CHECK_ADDRESS, ORDER_CONFIRM,
   ORDER_REMOVE_PRODUCT
-} from "../actionTypes";
+} from '../actionTypes';
 
 const initialState = {
   order: {},
@@ -18,13 +18,17 @@ function calcCartPrice(order) {
   return +result.toFixed(2);
 }
 
-export default (state=initialState, action) => {
-  let order;
+export default (state = initialState, action) => {
+  let order,
+    cartPrice,
+    payload,
+    orderConfirmed;
   switch (action.type) {
     case ORDER_CHECK:
       order = {};
-      let cartPrice = 0;
-      if (action.payload.hasOwnProperty('order') && action.payload.order) {
+      cartPrice = 0;
+      payload = action.payload;
+      if (payload.hasOwnProperty('order') && action.payload.order) {
         order = action.payload.order;
         cartPrice = calcCartPrice(order);
       }
@@ -42,13 +46,13 @@ export default (state=initialState, action) => {
         cartPrice: calcCartPrice(order)
       };
     case ORDER_CHECK_ADDRESS:
-      const payload = action.payload;
+      payload = action.payload;
       if (payload.hasOwnProperty('deliveryCost')) {
         return {
           ...state,
           deliveryCost: +payload.deliveryCost.toFixed(2),
           deliveryAddressCorrect: true
-        }
+        };
       }
       return {
         ...state,
@@ -63,10 +67,7 @@ export default (state=initialState, action) => {
         };
       }
       order = action.payload.order;
-      let orderConfirmed = false;
-      if (order.status === 'confirmed') {
-        orderConfirmed = true;
-      }
+      orderConfirmed = order.status === 'confirmed';
       return {
         ...state,
         order,
@@ -74,6 +75,6 @@ export default (state=initialState, action) => {
         cartPrice: 0 // reset cart price
       };
     default:
-      return {...state};
+      return { ...state };
   }
-}
+};

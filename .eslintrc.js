@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    jest: true,
   },
   extends: [
     'plugin:react/recommended',
@@ -29,4 +30,31 @@ module.exports = {
     'one-var': ['error', 'consecutive'],
     'react/destructuring-assignment': 'off',
   },
+  overrides: [
+    {
+      files: [
+        "**/*.test.js",
+        "**/__tests_/setup.js"
+      ],
+      env: {
+        jest: true
+      },
+      plugins: ['jest'],
+      globals: {
+        mount: "readonly",
+        shallow: "readonly",
+        render: "readonly"
+      },
+      rules: {
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-props-no-spreading": "off"
+      }
+    }
+  ],
 };

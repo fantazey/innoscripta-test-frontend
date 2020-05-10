@@ -6,14 +6,14 @@ exports[`CurrencyToggler should match snapshot 1`] = `
 >
   <span
     className="btn btn-primary"
-    key="currency_0"
+    key="currency_usd"
     onClick={[Function]}
   >
     $
   </span>
   <span
     className="btn "
-    key="currency_1"
+    key="currency_eur"
     onClick={[Function]}
   >
     €

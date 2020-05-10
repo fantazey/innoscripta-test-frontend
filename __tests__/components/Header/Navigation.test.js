@@ -1,8 +1,8 @@
-import Navigation from "../../../src/components/Header/Navigation";
+import Navigation from '../../../src/components/Header/Navigation';
 
-describe('Navigation', function () {
+describe('Navigation', () => {
   let wrapper;
-  let categories = [
+  const categories = [
     {
       path: '1',
       label: '1'
@@ -15,21 +15,21 @@ describe('Navigation', function () {
 
   beforeEach(() => {
     wrapper = shallow(
-      <Navigation categories={categories}/>
-    )
+      <Navigation categories={categories} />
+    );
   });
 
-  it('should match snapshot', function() {
+  it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render all passed categories', function() {
+  it('should render all passed categories', () => {
     expect(wrapper.find('ul').children()).toHaveLength(categories.length);
   });
 
-  it('should pass props correctly', function() {
-    let child = wrapper.find('NavLink').first();
+  it('should pass props correctly', () => {
+    const child = wrapper.find('NavLink').first();
     expect(child.prop('to')).toEqual(categories[0].path);
     expect(child.text()).toEqual(categories[0].label);
-  })
+  });
 });

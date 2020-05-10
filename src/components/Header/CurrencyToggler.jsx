@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
     toggleCurrency: currency => dispatch({ type: COMMON_TOGGLE_CURRENCY, currency })
   });
 
-class CurrencyToggler extends React.Component {
+export class CurrencyToggler extends React.Component {
   componentDidMount() {
     const { currencyLoaded, loadCurrency, currencyList } = this.props;
     if (currencyList.length < 2) {

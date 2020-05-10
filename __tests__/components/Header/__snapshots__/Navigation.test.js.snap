@@ -13,13 +13,12 @@ exports[`Navigation should match snapshot 1`] = `
   >
     <li
       className="nav-item mx-3"
-      key="nav_li_0"
+      key="1"
     >
       <NavLink
         activeClassName="active"
         className="nav-link text-uppercase"
         exact={true}
-        key="navigation_0"
         to="1"
       >
         1
@@ -27,13 +26,12 @@ exports[`Navigation should match snapshot 1`] = `
     </li>
     <li
       className="nav-item mx-3"
-      key="nav_li_1"
+      key="2"
     >
       <NavLink
         activeClassName="active"
         className="nav-link text-uppercase"
         exact={true}
-        key="navigation_1"
         to="2"
       >
         2

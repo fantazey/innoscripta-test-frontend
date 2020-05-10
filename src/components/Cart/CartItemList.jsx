@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CartRow from "./CartRow";
+import CartRow from './CartRow';
 
-const CartItemList = ({items}) => {
-  return <React.Fragment>
-    {Object.keys(items).map((key, index) =>
-        <CartRow key={`cart_row_${index}`}
-                 row={items[key]}/>
-    )}
-  </React.Fragment>
-};
+const CartItemList = ({ items }) => (
+  <>
+    {Object.keys(items).map((key) => (
+      <CartRow
+        key={key.toString()}
+        row={items[key]}
+      />
+    ))}
+  </>
+);
 
-CartItemList.defaultProp = {
+CartItemList.defaultProps = {
   items: {},
 };
 
 CartItemList.propTypes = {
-  items: PropTypes.object
+  items: PropTypes.shape()
 };
 
 export default CartItemList;

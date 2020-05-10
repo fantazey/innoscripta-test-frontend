@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { render } from 'react-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
@@ -11,7 +11,7 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={App}/>
+        <Route path="/" component={App} />
       </Switch>
     </ConnectedRouter>
   </Provider>,

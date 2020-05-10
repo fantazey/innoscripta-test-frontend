@@ -1,9 +1,10 @@
+/* eslint-disable one-var */
 import config from './config';
 
 const apiURL = url => `${config.apiRoot}${url}`;
 
 const headers = {
-  'Content-Type': 'application/json',
+  'Content-Type': 'application/json'
 };
 
 const requests = {
@@ -19,7 +20,7 @@ const requests = {
 
 const menu = {
   loadCategories: () => requests.get('/types'),
-  loadProducts: category => requests.get(`/types/${category}/products`),
+  loadProducts: category => requests.get(`/types/${category}/products`)
 };
 
 const cart = {
@@ -28,12 +29,12 @@ const cart = {
   removeFromCart: data => requests.post('/removeFromCart', data),
   confirmOrder: data => requests.post('/confirmOrder', data),
   checkOrder: () => requests.get('/orderCheck'),
-  checkAddress: address => requests.post('/addressCheck', {address})
+  checkAddress: address => requests.post('/addressCheck', { address })
 };
 
 const common = {
   loadCurrency: () => fetch(
-      'https://api.exchangeratesapi.io/latest?base=USD&symbols=EUR,USD'
+    'https://api.exchangeratesapi.io/latest?base=USD&symbols=EUR,USD'
   ).then(res => res.json())
 };
 

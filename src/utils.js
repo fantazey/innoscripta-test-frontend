@@ -1,9 +1,9 @@
 export const currencySymbolMap = {
-  'usd': '$',
-  'eur': '€'
+  usd: '$',
+  eur: '€'
 };
 
-export function toCurrency(value, currency='usd') {
+export function toCurrency(value, currency = 'usd') {
   const key = currency.toLowerCase();
-  return `${value} ${currencySymbolMap[key]}`
+  return `${value} ${currencySymbolMap[key]}`;
 }

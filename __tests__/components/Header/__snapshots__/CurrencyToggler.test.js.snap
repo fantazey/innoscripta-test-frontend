@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CurrencyToggler should match snapshot 1`] = `
+<div
+  className="d-flex col-1"
+>
+  <span
+    className="btn btn-primary"
+    key="currency_0"
+    onClick={[Function]}
+  >
+    $
+  </span>
+  <span
+    className="btn "
+    key="currency_1"
+    onClick={[Function]}
+  >
+    €
+  </span>
+</div>
+`;

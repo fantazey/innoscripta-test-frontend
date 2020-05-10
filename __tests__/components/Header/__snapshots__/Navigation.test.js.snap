@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation should match snapshot 1`] = `
+<nav
+  style={
+    Object {
+      "backgroundColor": "aliceblue",
+    }
+  }
+>
+  <ul
+    className="nav  d-flex flex-row justify-content-between"
+  >
+    <li
+      className="nav-item mx-3"
+      key="nav_li_0"
+    >
+      <NavLink
+        activeClassName="active"
+        className="nav-link text-uppercase"
+        exact={true}
+        key="navigation_0"
+        to="1"
+      >
+        1
+      </NavLink>
+    </li>
+    <li
+      className="nav-item mx-3"
+      key="nav_li_1"
+    >
+      <NavLink
+        activeClassName="active"
+        className="nav-link text-uppercase"
+        exact={true}
+        key="navigation_1"
+        to="2"
+      >
+        2
+      </NavLink>
+    </li>
+  </ul>
+</nav>
+`;

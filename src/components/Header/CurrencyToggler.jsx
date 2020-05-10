@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {currencySymbolMap} from "../../utils";
 import {COMMON_EXCHANGE_RATE_LOADED, COMMON_TOGGLE_CURRENCY} from "../../actionTypes";
 import api from "../../api";
@@ -15,9 +16,12 @@ const mapDispatchToProps = dispatch => ({
     toggleCurrency: currency => dispatch({type: COMMON_TOGGLE_CURRENCY, currency})
 });
 
-class CurrencyToggler extends React.Component {
+export class CurrencyToggler extends React.Component {
     componentDidMount() {
-        const {currencyLoaded, loadCurrency} = this.props;
+        const {currencyLoaded, loadCurrency, currencyList} = this.props;
+        if (currencyList.length < 2) {
+            return;
+        }
         if (!currencyLoaded) {
             const promise = api.common.loadCurrency();
             loadCurrency(promise);
@@ -30,6 +34,9 @@ class CurrencyToggler extends React.Component {
             currentCurrency,
             toggleCurrency
         } = this.props;
+        if (currencyList.length < 2) {
+            return null;
+        }
         return <div className="d-flex col-1">
             {currencyList.map((currency, index) => {
                 return <span className={`btn ${currency === currentCurrency ? 'btn-primary' : ''}`}
@@ -40,7 +47,14 @@ class CurrencyToggler extends React.Component {
             })}
         </div>
     }
-
 }
+
+CurrencyToggler.propTypes = {
+    currencyList: PropTypes.arrayOf(PropTypes.string),
+    currencyLoaded: PropTypes.bool,
+    currentCurrency: PropTypes.string,
+    loadCurrency: PropTypes.func,
+    toggleCurrency: PropTypes.func
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencyToggler);

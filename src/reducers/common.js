@@ -1,6 +1,6 @@
 import {COMMON_EXCHANGE_RATE_LOADED, COMMON_TOGGLE_CURRENCY} from "../actionTypes";
 
-const initialState = {
+export const initialState = {
     currencyList: ['usd', 'eur'],
     currentCurrency: 'usd',
     currencyRates: {}

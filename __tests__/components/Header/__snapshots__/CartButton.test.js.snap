@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CartButton should match snapshot 1`] = `
+<div
+  className="d-flex"
+>
+  <div
+    className="mr-1 bg-warning"
+    style={
+      Object {
+        "borderRadius": "0.4em",
+      }
+    }
+  >
+    <NavLink
+      activeClassName="active"
+      className="nav-link"
+      exact={true}
+      to="/cart"
+    >
+      <span>
+        _cart
+      </span>
+      <span
+        className="pl-2"
+      >
+        <CurrencyPrice
+          price={12}
+        />
+      </span>
+    </NavLink>
+  </div>
+</div>
+`;

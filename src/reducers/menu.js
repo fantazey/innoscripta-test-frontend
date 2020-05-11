@@ -2,8 +2,9 @@ import {
   CATEGORIES_LOADED,
   CATEGORY_PRODUCTS_LOAD
 } from '../actionTypes';
+import { deepClone } from '../utils';
 
-const initialState = {
+export const initialState = {
   categories: [],
   categoriesByName: [],
   categoriesLoaded: false,
@@ -24,17 +25,19 @@ export default (state = initialState, action) => {
     productsByCategoryCount;
   switch (action.type) {
     case CATEGORIES_LOADED:
-      categories = action.payload.types;
-      if (!categories) {
+      if (!action.payload || !action.payload.types) {
         return {
-          ...state,
+          ...deepClone(state),
           error: 'Empty categories. Something gone wrong'
         };
       }
+      categories = action.payload.types;
       categoriesByName = categories.map(x => x.name);
-      productsByCategory = { ...state.productsByCategory };
-      categoryIsEmpty = { ...state.categoryIsEmpty };
-      productsByCategoryCount = { ...state.productsByCategoryCount };
+
+      productsByCategory = deepClone(state.productsByCategory);
+      categoryIsEmpty = deepClone(state.categoryIsEmpty);
+      productsByCategoryCount = deepClone(state.productsByCategoryCount);
+
       categoriesByName.forEach(item => {
         if (!productsByCategory.hasOwnProperty(item)) {
           productsByCategory[item] = [];
@@ -47,26 +50,37 @@ export default (state = initialState, action) => {
         }
       });
       return {
-        ...state,
-        categories: action.payload.types,
+        ...deepClone(state),
+        categories,
         categoryIsEmpty,
         productsByCategory,
+        productsByCategoryCount,
         categoriesByName,
         categoriesLoaded: true
       };
     case CATEGORY_PRODUCTS_LOAD:
-      category = action.category;
-      products = action.payload.products;
-      meta = action.payload.meta;
-      productsByCategory = { ...state.productsByCategory };
-      productsByCategoryCount = { ...state.productsByCategoryCount };
-      if (!productsByCategory[category] || !products) {
+      if (!action.category || !action.payload || !action.payload.products) {
         return {
-          ...state
+          ...deepClone(state),
+          error: 'Error. Incorrect payload or category',
         };
       }
+
+      category = action.category;
+      if (!state.productsByCategory[category]) {
+        return {
+          ...deepClone(state),
+          error: 'Error. Wrong category'
+        };
+      }
+
+      products = action.payload.products;
+      productsByCategory = deepClone(state.productsByCategory);
+      productsByCategoryCount = deepClone(state.productsByCategoryCount);
+      categoryIsEmpty = deepClone(state.categoryIsEmpty);
+      meta = action.payload.meta;
       productsByCategoryCount[category] = meta && meta.total ? meta.total : 0;
-      categoryIsEmpty = { ...state.categoryIsEmpty };
+
       if (products.length === 0 && productsByCategory[category].length === 0) {
         categoryIsEmpty[category] = true;
         return {
@@ -74,23 +88,25 @@ export default (state = initialState, action) => {
           categoryIsEmpty
         };
       }
-      productsByCategory[category] = [];
+
       products.forEach(product => {
-        const existed = productsByCategory[category].find(x => x.id === product.id);
+        const existed = productsByCategory[category].find(x => x.id === product.id),
+          cloneProduct = deepClone(product);
         if (existed) {
-          Object.assign(existed, product);
+          Object.assign(existed, cloneProduct);
         } else {
-          productsByCategory[category].push(product);
+          productsByCategory[category].push(cloneProduct);
         }
       });
       return {
-        ...state,
+        ...deepClone(state),
+        productsByCategoryCount,
         productsByCategory,
         categoryIsEmpty
       };
     default:
       return {
-        ...state
+        ...deepClone(state)
       };
   }
 };

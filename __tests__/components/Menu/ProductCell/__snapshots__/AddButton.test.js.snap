@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu/ProductCell/AddButton should match snapshot 1`] = `
+<div
+  className="d-flex btn btn-info align-self-stretch justify-content-start"
+  onClick={[MockFunction]}
+>
+  _add-to-cart
+  <span
+    className="px-2 align-right"
+  >
+    <CurrencyPrice
+      price={12.12}
+    />
+  </span>
+</div>
+`;

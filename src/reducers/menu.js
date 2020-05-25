@@ -2,7 +2,12 @@ import {
   CATEGORIES_LOADED,
   CATEGORY_PRODUCTS_LOAD
 } from '../actionTypes';
-import { deepClone } from '../utils';
+import {
+  categoryProductsLoadValidation,
+  categoriesLoadedValidation,
+  deepClone
+} from '../utils';
+import {act} from "react-dom/test-utils";
 
 export const initialState = {
   categories: [],
@@ -22,15 +27,19 @@ export default (state = initialState, action) => {
     category,
     products,
     meta,
+    error,
     productsByCategoryCount;
   switch (action.type) {
     case CATEGORIES_LOADED:
-      if (!action.payload || !action.payload.types) {
+      error = categoriesLoadedValidation(action);
+      if (error) {
+        console.error(error);
         return {
           ...deepClone(state),
-          error: 'Empty categories. Something gone wrong'
+          error,
         };
       }
+
       categories = action.payload.types;
       categoriesByName = categories.map(x => x.name);
 
@@ -59,21 +68,15 @@ export default (state = initialState, action) => {
         categoriesLoaded: true
       };
     case CATEGORY_PRODUCTS_LOAD:
-      if (!action.category || !action.payload || !action.payload.products) {
+      error = categoryProductsLoadValidation(action, state);
+      if (error) {
+        console.error(error);
         return {
           ...deepClone(state),
-          error: 'Error. Incorrect payload or category',
+          error,
         };
       }
-
       category = action.category;
-      if (!state.productsByCategory[category]) {
-        return {
-          ...deepClone(state),
-          error: 'Error. Wrong category'
-        };
-      }
-
       products = action.payload.products;
       productsByCategory = deepClone(state.productsByCategory);
       productsByCategoryCount = deepClone(state.productsByCategoryCount);

@@ -20,7 +20,7 @@ const requests = {
 
 const menu = {
   loadCategories: () => requests.get('/types'),
-  loadProducts: category => requests.get(`/types/${category}/products`)
+  loadProducts: (category, l, o) => requests.get(`/types/${category}/products?limit=${l}&offset=${o}`)
 };
 
 const cart = {

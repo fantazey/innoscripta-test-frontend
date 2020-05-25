@@ -28,3 +28,37 @@ export function deepClone(source) {
   }
   return res;
 }
+
+export function buildPageArray(totalCount, perPage) {
+  let count = totalCount / perPage;
+  if (totalCount % perPage !== 0) {
+    count = Math.floor(totalCount / perPage) + 1;
+  }
+  const pages = [];
+  for (let i = 1; i <= count; i++) {
+    pages.push(i);
+  }
+  return pages;
+}
+
+export function categoryProductsLoadValidation(action, state) {
+  if (
+    !action.category
+    || !action.payload
+    || !action.payload.products
+    || !Array.isArray(action.payload.products)
+  ) {
+    return 'Error. Incorrect payload or category';
+  }
+  if (!state.productsByCategory[action.category]) {
+    return 'Error. Wrong category';
+  }
+  return null;
+}
+
+export function categoriesLoadedValidation(action) {
+  if (!action.payload || !action.payload.types) {
+    return 'Empty categories. Something gone wrong';
+  }
+  return null;
+}

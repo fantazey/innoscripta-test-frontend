@@ -29,6 +29,7 @@ module.exports = {
     'no-prototype-builtins': 'off',
     'one-var': ['error', 'consecutive'],
     'react/destructuring-assignment': 'off',
+    'no-plusplus': 'off'
   },
   overrides: [
     {
@@ -53,7 +54,7 @@ module.exports = {
         "jest/valid-expect": "error",
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",
-        "react/jsx-props-no-spreading": "off"
+        "react/jsx-props-no-spreading": "off",
       }
     }
   ],

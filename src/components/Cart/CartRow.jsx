@@ -55,10 +55,7 @@ class CartRow extends React.Component {
         </div>
         <div className="col-3 d-flex flex-row align-items-stretch">
           <CartRowButton add={this.add} extraClass="fa-plus-circle" />
-          <div
-            className="btn btn-info disabled"
-            style={{ fontWeight: 'bolder' }}
-          >
+          <div className="btn btn-info disabled fw-bolder">
             {row.count}
           </div>
           <CartRowButton add={this.remove} extraClass="fa-minus-circle" />

@@ -1,0 +1,33 @@
+.fw-bolder {
+    font-weight: bolder;
+}
+
+.cart-button {
+    border-radius: 0.4em;
+}
+
+.logo {
+    width: 6em;
+    height: 6em;
+}
+
+.navigation-bar {
+    background-color: aliceblue;
+}
+
+.title-wrapper {
+    font-size: 3em;
+}
+
+.product-cell-wrapper {
+    width: 10em;
+}
+
+.product-cell-image {
+    width: 150px;
+    height: 150px;
+}
+
+.product-cell-name-container {
+    height: 6em;
+}

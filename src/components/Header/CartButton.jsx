@@ -8,7 +8,7 @@ const CartButton = props => {
   const { t } = useTranslation();
   return (
     <div className="d-flex">
-      <div className="mr-1 bg-warning" style={{ borderRadius: '0.4em' }}>
+      <div className="mr-1 bg-warning cart-button">
         <NavLink
           exact
           className="nav-link"

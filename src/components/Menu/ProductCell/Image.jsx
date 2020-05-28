@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ProductCellImage = ({ image, name }) => (
   <div className="d-flex">
-    <img src={image} height="150" width="150" alt={name} />
+    <img src={image} className="product-cell-image" alt={name} />
   </div>
 );
 

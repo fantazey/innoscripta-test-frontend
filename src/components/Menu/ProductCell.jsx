@@ -5,12 +5,9 @@ import Image from './ProductCell/Image';
 import AddButton from './ProductCell/AddButton';
 
 const ProductCell = ({ item, add }) => (
-  <div className="d-flex flex-column m-2" style={{ width: '10em' }}>
+  <div className="d-flex flex-column m-2 product-cell-wrapper">
     <Image {...item} />
-    <div
-      className="d-flex flex-column justify-content-between"
-      style={{ height: '6em' }}
-    >
+    <div className="d-flex flex-column justify-content-between product-cell-name-container">
       <div className="d-flex flex-row justify-content-between">
         <span title={item.description}>
           {item.name}

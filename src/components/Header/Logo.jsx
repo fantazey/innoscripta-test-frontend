@@ -7,7 +7,7 @@ const Logo = () => (
       exact
       to="/"
     >
-      <img src="/logo.png" alt="" style={{ width: '6em', height: '6em' }} />
+      <img src="/logo.png" alt="" className="logo" />
     </NavLink>
   </div>
 );

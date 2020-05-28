@@ -9,6 +9,8 @@ import CategoryList from './components/CategoryList';
 import Cart from './components/Cart';
 import { ORDER_CHECK } from './actionTypes';
 import Confirm from './components/Confirm';
+import './styles/reset.css';
+import './styles/main.css';
 
 const mapDispatchToProps = dispatch => ({
   checkOrder: payload => dispatch({ type: ORDER_CHECK, payload })

@@ -2,11 +2,7 @@
 
 exports[`Navigation should match snapshot 1`] = `
 <nav
-  style={
-    Object {
-      "backgroundColor": "aliceblue",
-    }
-  }
+  className="navigation-bar"
 >
   <ul
     className="nav  d-flex flex-row justify-content-between"

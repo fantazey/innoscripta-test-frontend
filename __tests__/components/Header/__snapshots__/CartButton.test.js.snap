@@ -5,12 +5,7 @@ exports[`CartButton should match snapshot 1`] = `
   className="d-flex"
 >
   <div
-    className="mr-1 bg-warning"
-    style={
-      Object {
-        "borderRadius": "0.4em",
-      }
-    }
+    className="mr-1 bg-warning cart-button"
   >
     <NavLink
       activeClassName="active"

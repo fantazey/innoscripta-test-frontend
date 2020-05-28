@@ -14,10 +14,7 @@ const ConfirmRow = props => {
         </div>
       </div>
       <div className="col-3 d-flex flex-row align-items-stretch">
-        <div
-          className="btn btn-info disabled"
-          style={{ fontWeight: 'bolder' }}
-        >
+        <div className="btn btn-info disabled fw-bolder">
           {row.count}
         </div>
       </div>
